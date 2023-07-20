@@ -1,0 +1,83 @@
+<html lang="en">
+<head>
+  <%- include('./partials/head.ejs')%>
+  <style>
+    table{
+        margin-top: 50px;
+        margin-bottom: auto;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    th,td{
+        padding: 5px;
+        border: solid 4px black;
+    }
+  </style>
+</head>
+<body>
+    <%- include('./partials/navbar.ejs')%>
+    <div style="height: 50px;"></div>
+    <div class="content-container" style="margin-top: 50px;">
+    <div class="content" >
+
+   
+    <header class="v-header">
+
+    <div class="header-content">
+        <table>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Country</th>
+                <th>State</th>
+                <th>City</th>
+                <th>Gender</th>
+                <th>dob(YYYY-MM-DD)</th>
+                <th>Age</th>
+                
+            </tr>
+        <% information.forEach(item => { %>
+            <tr>
+               <td><%= item.firstName %> </td>
+               <td><%= item.lastName %> </td>
+               <td><%= item.email %> </td>
+               <td><%= item.country %> </td>
+               <td><%= item.state %> </td>
+               <td><%= item.city %> </td>
+               <td><%= item.gender %> </td>
+               <td><%= (item.dob).toISOString().split('T')[0] %> </td>
+               <td><%= item.age %> </td>
+            </tr>
+        <% }) %>
+        </table>
+        <!-- <hr> -->
+    </div>
+
+          </header>
+        </div>
+        </div>
+
+
+
+       <!-- <script>
+        function spinner(){
+            document.getElementById('hamburger').classList.add('fa-spin');
+        }
+        function outspinner(){
+            document.getElementById('hamburger').classList.remove('fa-spin');
+        }
+        function cancelspinner(){
+            document.getElementById('cancel').classList.add('fa-spin');
+        }
+        function canceloutspinner(){
+            document.getElementById('cancel').classList.remove('fa-spin');
+        }
+    </script> -->
+</body>
+
+    
+
+   
+    </body>
+</html>

@@ -1,0 +1,134 @@
+<html lang="en">
+<head>
+  <%- include('./partials/head.ejs')%>
+  <style>
+    .header-content{
+        width: 100%;
+        margin-top: 50px;
+        margin-left: 20px;
+    }
+  </style>
+</head>
+<body>
+    <%- include('./partials/navbar.ejs')%>
+    <div style="height: 50px;"></div>
+    <div class="content-container" style="margin-top: 50px;">
+    <div class="content" >
+
+   
+    <header class="v-header">
+
+    <div class="header-content" style="margin-top: 20px;">
+        <form method="POST" action="/uploadData">
+            <label for="firstName">First Name</label>
+            <input type="text" onkeydown="return /[a-z]/i.test(event.key)" name="firstName" required><br>
+
+            <label for="lastName">Last Name</label>
+            <input type="text" onkeydown="return /[a-z]/i.test(event.key)" name="lastName" required><br>
+
+            <label for="lastName">Email</label>
+            <input type="email" name="email" required><br>
+
+            <label for="country">Choose a Country:</label>
+
+            <select name="country" id = "country" onchange="countryChange()" required>
+                <option value = ""></option>
+                <% countries.forEach(data =>{ %>
+                    <%= data %>
+                    <option value = <%= data._id %> > <%= data.country %> </option>
+                <% }) %>
+                <!-- <option value="volvo">Volvo</option> -->
+            </select>
+            <br>
+            
+            <label for="state">Choose a State:</label>
+            <select name = "state" id = "state" onchange="stateChange()" required>
+                <option value = ""></option>
+            </select><br>
+
+            <label for="city">Choose a City:</label>
+            <select name = "city" id = "city" required>
+                <option value = ""></option>
+            </select><br>
+            
+            <label for="gender">Gender:</label><br>
+            <input type= "radio" name="gender" value="female" checked required> Female
+            <input type= "radio" name="gender" value="male"> Male
+            <br>
+
+            <label for="date">DOB:</label>
+            <input type="date" id="date" name="dob" onchange="getAge()" required>
+            <br>
+
+            <label for="age">Age</label>
+            <input type="number" name="age" id="age" placeholder="Please Enter DOB" required disabled>
+            <br>
+            <button> Submit </button>
+        </form>
+        <a href="/"><input type="button" value="Display Information"></a>
+    </div>
+
+          </header>
+        </div>
+        </div>
+
+
+        <script>
+            const date = document.getElementById('date');
+            let tempDate = new Date();
+            tempDate.setYear(tempDate.getFullYear() -14);
+            console.log(tempDate)
+            
+            date.max = tempDate.toISOString().split('T')[0];
+
+            let states = <%- JSON.stringify(states) %>;
+            let cities = <%- JSON.stringify(cities) %>;
+            console.log(cities);
+            function countryChange(){
+                let stateSelect = document.getElementById("state");
+                stateSelect.innerHTML = '<option></option>'
+
+                var country = document.getElementById("country").value;
+                console.log(country)
+                // let data = states[country.value]
+                states[country].forEach(item =>{
+                    let option = document.createElement("option");
+                    option.text = item.state;
+                    option.value = item._id;
+                    stateSelect.add(option);
+                })
+            }
+
+            function stateChange(){
+                let citySelect = document.getElementById("city");
+                citySelect.innerHTML = '<option></option>'
+
+                let state = document.getElementById("state").value;
+                console.log(state);
+                cities[state].forEach(item =>{
+                    let option = document.createElement("option");
+                    option.text = item.city;
+                    option.value = item._id;
+                    citySelect.add(option);
+                })
+            }
+
+            function getAge() {
+                const dateString = document.getElementById("date").value;
+                var today = new Date();
+                var birthDate = new Date(dateString);
+                var age = today.getFullYear() - birthDate.getFullYear();
+                var m = today.getMonth() - birthDate.getMonth();
+                if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+                const ageInput = document.getElementById("age");
+                ageInput.value = age;
+            }
+        </script>
+       
+  
+
+   
+    </body>
+</html>
